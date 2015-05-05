@@ -16,4 +16,7 @@ class Level(object):
 
 	def turn(self, game, unit):
 		enemy = unit.getNearestEnemy()
-		unit.moveToward(enemy.pos)
+		if unit.validAttackTarget(enemy.pos):
+			unit.attack(enemy.pos)
+		if not unit.hasMoved:
+			unit.moveToward(enemy.pos)

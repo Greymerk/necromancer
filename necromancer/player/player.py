@@ -14,11 +14,11 @@ class Player(object):
 		self.quit = False
 		self.board = board
 		self.board.units.add(Unit(self.board, Vector2(0, 0), self))
-		#self.board.units.add(Unit(self.board, Vector2(0, 1), self))
-		#self.board.units.add(Unit(self.board, Vector2(0, 2), self))
-		#self.board.units.add(Unit(self.board, Vector2(0, 3), self))
-		#self.board.units.add(Unit(self.board, Vector2(0, 4), self))
-		#self.board.units.add(Unit(self.board, Vector2(0, 5), self))
+		self.board.units.add(Unit(self.board, Vector2(0, 1), self))
+		self.board.units.add(Unit(self.board, Vector2(0, 2), self))
+		self.board.units.add(Unit(self.board, Vector2(0, 3), self))
+		self.board.units.add(Unit(self.board, Vector2(0, 4), self))
+		self.board.units.add(Unit(self.board, Vector2(0, 5), self))
 
 	def update(self):
 		pass
@@ -27,6 +27,17 @@ class Player(object):
 		cell = self.board.grid.getCellFromPoint(pygame.mouse.get_pos())
 		if cell is not None:
 			cell.draw(surface, Color.rainbow())
+
+		sel = self.board.getSelected()
+		if sel is not None:
+			for cell in self.board.grid.cells:
+				if not sel.hasMoved and sel.validMove(cell.pos):
+					cell.draw(surface, THECOLORS["yellow"])
+				if sel.validAttackTarget(cell.pos):
+					cell.draw(surface, THECOLORS["red"])
+				
+
+		
 
 	def turn(self, game, unit):
 		
@@ -44,8 +55,12 @@ class Player(object):
 			
 				cell = self.board.grid.getCellFromPoint(pygame.mouse.get_pos())
 				if cell is not None:
-					if unit.validMove(cell.pos):
+					if not unit.hasMoved and unit.validMove(cell.pos):
 						unit.move(cell.pos)
+
+					if unit.validAttackTarget(cell.pos):
+						unit.attack(cell.pos)
+					
 	
 		
 			

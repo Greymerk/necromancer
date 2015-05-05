@@ -19,11 +19,9 @@ class UnitManager(object):
 
 	def draw(self, surface):
 		
-		sel = self.getSelected()
-		if sel is not None:
-			for cell in self.grid.cells:
-				if sel.validMove(cell.pos):
-					cell.draw(surface, THECOLORS["yellow"])
+		for unit in self.units:
+			if unit.isDead():
+				self.units.remove(unit)
 
 		for unit in self.units:
 			unit.draw(surface)

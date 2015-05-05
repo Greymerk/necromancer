@@ -48,12 +48,45 @@ class Unit(object):
 			return False;
 
 		return True
+
+	def validAttackTarget(self, pos):
+
+		unit = self.board.getEntity(pos)
+
+		if not self.board.inBounds(pos):
+			return False
+
+		if unit is None:
+			return False
+
+		if unit.owner is self.owner:
+			return False
+
+		if self.pos.dist(pos) > 1:
+			return False
+
+		return True		
+
+	def getNearbyAttackTarget(self):
+		for unit in self.board.units.units:
+			if self.validAttackTarget(unit.pos):
+				return unit
+
+	def attack(self, pos):
+		target = self.board.getEntity(pos)
+		if target is None:
+			return
+		target.damage(self)
+		self.initiative = Unit.maxInitiative
+
+	def damage(self, attacker):
+		self.hitpoints -= 1
 		
 	def move(self, vec):
-		if vec is not self.pos:
-			self.pos = vec
+		self.pos = vec
 		self.hasMoved = True
-		self.initiative = Unit.maxInitiative
+		if self.getNearbyAttackTarget() is None:
+			self.initiative = Unit.maxInitiative
 
 	def moveToward(self, vec):
 		nearest = None
