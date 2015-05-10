@@ -64,6 +64,12 @@ class Unit(object):
 
 		if self.pos.dist(pos) > 1:
 			return False
+		
+		xDiff = abs(self.pos[0] - pos[0]);
+		yDiff = abs(self.pos[1] - pos[1]);
+	
+		if(xDiff != 0 and yDiff != 0):
+			return False;
 
 		return True		
 
@@ -128,5 +134,8 @@ class Unit(object):
 
 			if self.pos.dist(unit.pos) < self.pos.dist(nearest.pos):
 				nearest = unit
+
+			if self.validAttackTarget(unit.pos):
+				return unit
 
 		return nearest
