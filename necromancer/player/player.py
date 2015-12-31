@@ -26,7 +26,7 @@ class Player(object):
 	def draw(self, surface):
 		cell = self.board.grid.getCellFromPoint(pygame.mouse.get_pos())
 		if cell is not None:
-			cell.draw(surface, Color.rainbow())
+			cell.highlight(surface, Color.rainbow())
 
 		sel = self.board.getSelected()
 		if sel is not None:

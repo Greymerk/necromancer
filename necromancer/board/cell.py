@@ -18,6 +18,12 @@ class Cell(object):
 		pad = pygame.Rect((self.point[0] + padding, self.point[1] + padding), (Cell.size - padding, Cell.size - padding))
 		pygame.draw.rect(surface, color, pad)
 
+	def highlight(self, surface, color = THECOLORS["black"]):
+		padding = 4
+		pad = pygame.Rect((self.point[0] + padding, self.point[1] + padding), (Cell.size - padding, Cell.size - padding))
+		pygame.draw.rect(surface, color, pad, 4)
+		
+		
 	def getRect(self):
 		return pygame.Rect((self.point[0], self.point[1]),(Cell.size, Cell.size))
 
