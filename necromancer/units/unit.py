@@ -86,11 +86,11 @@ class Unit(object):
 		target = self.board.getEntity(pos)
 		if target is None:
 			return
-		target.damage(self)
+		target.damage(1, self)
 		self.initiative = Unit.maxInitiative
 
-	def damage(self, attacker):
-		self.hitpoints -= 1
+	def damage(self, damage, attacker):
+		self.hitpoints -= damage
 		
 	def move(self, vec):
 		self.pos = vec
