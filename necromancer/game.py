@@ -17,14 +17,15 @@ class Game(object):
 		self.surface = pygame.display.set_mode(self.size)
 		self.clock = pygame.time.Clock()
 
-		self.turn = 0
+		self.turn = 1
 		offset = (100,100)
 		self.gameboard = Gameboard(offset)
 		self.player = Player(self.gameboard)
 		self.level = Level(self.gameboard)
+		self.level.update(0, self.gameboard)
 		self.player.screenshot = self.printscreen
 		self.view = Gameview(self.gameboard, self.player)
-
+		
 		while not self.player.quit:
 
 			self.clock.tick(30)
@@ -32,10 +33,11 @@ class Game(object):
 			
 			if toMove is None:
 				self.gameboard.update()
+				self.level.update(self.turn, self.gameboard)
+				self.turn += 1
 				continue
 			
 			toMove.owner.turn(self, toMove)
-
 			self.view.draw(self.surface)
 		
 

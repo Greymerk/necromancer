@@ -1,6 +1,7 @@
 import pygame
 from pygame.color import THECOLORS
 
+from necromancer.util import Color
 from necromancer.util import Vector2
 from necromancer.board import Cell
 
@@ -8,7 +9,9 @@ from necromancer.board import Cell
 class Unit(object):
 
 	maxInitiative = 1
-
+	OUTLINE = 4
+	UNIT_SIZE = Cell.size / 4
+	
 	def __init__(self, board, pos, owner=None):
 		self.pos = pos
 		self.owner = owner
@@ -27,8 +30,9 @@ class Unit(object):
 	def draw(self, surface):
 		cell = self.board.grid.getCellFromPos(self.pos)
 		r = cell.getRect()
-		color = self.colorSelected if self.board.getSelected() is self else self.owner.color
-		pygame.draw.circle(surface, color, (cell.point[0] + Cell.size/2, cell.point[1] + Cell.size/2), Cell.size/4)
+		if self.board.getSelected() is self:
+			pygame.draw.circle(surface, Color.rainbow(), (cell.point[0] + Cell.size/2, cell.point[1] + Cell.size/2), Unit.UNIT_SIZE + Unit.OUTLINE)
+		pygame.draw.circle(surface, self.owner.color, (cell.point[0] + Cell.size/2, cell.point[1] + Cell.size/2), Unit.UNIT_SIZE)
 
 	def validMove(self, pos):
 

@@ -22,7 +22,7 @@ class UnitManager(object):
 			self.previouslySelected = self.units[:1][0]
 
 		if self.previouslySelected.hasInitiative():
-			return self.previouslySelected			
+			return self.previouslySelected
 
 		for unit in self.units:
 			if unit.hasInitiative() and self.previouslySelected.owner is not unit.owner:
@@ -60,8 +60,7 @@ class UnitManager(object):
 
 		num = 0
 
-		for i in range(len(order)):
-			unit = order[i]
+		for i, unit in enumerate(order):
 			if unit.owner is owner:
 				num = p1
 				p1 += 1
@@ -70,7 +69,7 @@ class UnitManager(object):
 				p2 += 1
 			cell = self.grid.getCellFromPos(unit.pos)
 			surf = surface.subsurface(cell.getRect())
-			surf.blit(self.font.render(str(num), 1, THECOLORS["white"]), (0, 0))
+			surf.blit(self.font.render(str(num), 1, THECOLORS["white"]), (5, 5))
 
 
 	def update(self):

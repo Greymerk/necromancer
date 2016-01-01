@@ -10,7 +10,7 @@ class Player(object):
 
 	
 	def __init__(self, board):
-		self.color = THECOLORS["yellow"]
+		self.color = THECOLORS["deepskyblue1"]
 		self.quit = False
 		self.board = board
 		self.board.units.add(Unit(self.board, Vector2(0, 0), self))
@@ -32,9 +32,9 @@ class Player(object):
 		if sel is not None:
 			for cell in self.board.grid.cells:
 				if not sel.hasMoved and sel.validMove(cell.pos):
-					cell.draw(surface, THECOLORS["yellow"])
+					cell.highlight(surface, THECOLORS["yellow"])
 				if sel.validAttackTarget(cell.pos):
-					cell.draw(surface, THECOLORS["red"])
+					cell.highlight(surface, THECOLORS["red"])
 				
 
 		
