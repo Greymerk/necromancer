@@ -18,7 +18,7 @@ class Game(object):
 		self.clock = pygame.time.Clock()
 
 		self.turn = 1
-		offset = (100,100)
+		offset = (150,100)
 		self.gameboard = Gameboard(offset)
 		self.player = Player(self.gameboard)
 		self.level = Level(self.gameboard)
@@ -26,7 +26,7 @@ class Game(object):
 		self.player.screenshot = self.printscreen
 		self.view = Gameview(self.gameboard, self.player)
 		
-		while not self.player.quit:
+		while not (self.player.quit or self.player.hasLost()):
 
 			self.clock.tick(30)
 			toMove = self.gameboard.units.getSelected()

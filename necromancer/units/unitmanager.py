@@ -10,6 +10,7 @@ class UnitManager(object):
 		self.font = pygame.font.Font(None,24)
 		self.previouslySelected = None
 
+		
 	def add(self, unit):
 		self.units.append(unit)
 
@@ -82,3 +83,6 @@ class UnitManager(object):
 				self.units.remove(unit)
 			
 		self.previouslySelected = None
+		
+	def __iter__(self):
+		return iter(self.units)

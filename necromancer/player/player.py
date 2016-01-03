@@ -61,7 +61,13 @@ class Player(object):
 					if unit.validAttackTarget(cell.pos):
 						unit.attack(cell.pos)
 					
-	
+	def hasLost(self):
+		
+		for unit in self.board.units:
+			if unit.owner is self:
+				return False
+		
+		return True
 		
 			
 			
