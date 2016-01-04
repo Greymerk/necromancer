@@ -31,3 +31,6 @@ class Gameboard(object):
 
 	def inBounds(self, vec):
 		return self.grid.inBounds(vec)
+		
+	def __iter__(self):
+		return iter(self.grid)

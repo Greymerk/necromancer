@@ -47,3 +47,6 @@ class Grid(object):
 			return False
 
 		return True
+		
+	def __iter__(self):
+		return iter(self.cells)
