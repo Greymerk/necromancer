@@ -29,15 +29,19 @@ class Player(object):
 			cell.highlight(surface, Color.rainbow())
 
 		sel = self.board.getSelected()
-		if sel is not None:
-			for cell in self.board.grid.cells:
-				if not sel.hasMoved and sel.validMove(cell.pos):
-					cell.highlight(surface, THECOLORS["yellow"])
-				if sel.validAttackTarget(cell.pos):
-					cell.highlight(surface, THECOLORS["red"])
-				
+	
+		if sel is None:
+			return
 
-		
+		if sel.owner is not self:
+			return
+
+		for cell in self.board.grid.cells:
+			if not sel.hasMoved and sel.validMove(cell.pos):
+				cell.highlight(surface, THECOLORS["green"])
+			if sel.validAttackTarget(cell.pos):
+				cell.highlight(surface, THECOLORS["red"])
+				
 
 	def turn(self, game, unit):
 		
