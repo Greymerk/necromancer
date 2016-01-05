@@ -39,7 +39,7 @@ class Game(object):
 				self.waiting = True
 				self.player.control = False
 				continue
-			
+				
 			toMove.owner.turn(self, toMove)
 			self.view.draw(self.surface)
 		

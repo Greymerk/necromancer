@@ -28,7 +28,8 @@ class Player(object):
 	
 		if not self.control:
 			for cell in self.board:
-				cell.highlight(surface, THECOLORS["red"])
+				if self.validSpawn(cell.pos):
+					cell.highlight(surface, Color.rainbow())
 			return
 	
 		cell = self.board.grid.getCellFromPoint(pygame.mouse.get_pos())
@@ -65,8 +66,11 @@ class Player(object):
 			elif e.type == pygame.MOUSEBUTTONUP and e.button == 1:
 				
 				if game.waiting:
-					game.waiting = False
-					self.control = True
+					cell = self.board.grid.getCellFromPoint(pygame.mouse.get_pos())
+					if self.validSpawn(cell.pos):
+						self.board.units.add(Unit(self.board, cell.pos, self))
+						game.waiting = False
+						self.control = True
 				else:
 					cell = self.board.grid.getCellFromPoint(pygame.mouse.get_pos())
 					if cell is not None:
@@ -76,7 +80,14 @@ class Player(object):
 						if unit.validAttackTarget(cell.pos):
 							unit.attack(cell.pos)
 
+	def validSpawn(self, pos):
+		if pos[0] is not 0:
+			return False
 		
+		if self.board.getEntity(pos) is not None:
+			return False
+			
+		return True
 	
 	def hasLost(self):
 		

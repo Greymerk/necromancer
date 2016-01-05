@@ -9,6 +9,7 @@ class Level(object):
 	def __init__(self, board):
 		self.rand = Random("wosk")
 		self.spawns = {}
+		self.control = True
 		self.color = THECOLORS["red"]
 		self.spawns[0] = 1
 		self.spawns[1] = 3
