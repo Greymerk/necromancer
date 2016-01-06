@@ -44,30 +44,25 @@ class UnitManager(object):
 		for unit in self.units:
 			unit.draw(surface)
 
-		order = []
-		for unit in self.units:
-			if unit.hasInitiative():
-				order.append(unit)
-
 		u = self.getSelected()
 
 		if u is None:
 			return
 
-		owner = u.owner
+		owner = self.units[0].owner
 
 		p1 = 0
-		p2 = 0
+		p2 = 1
 
 		num = 0
 
-		for i, unit in enumerate(order):
+		for i, unit in enumerate(self.units):
 			if unit.owner is owner:
 				num = p1
-				p1 += 1
+				p1 += 2
 			else:
 				num = p2
-				p2 += 1
+				p2 += 2
 			cell = self.grid.getCellFromPos(unit.pos)
 			surf = surface.subsurface(cell.getRect())
 			surf.blit(self.font.render(str(num), 1, THECOLORS["white"]), (5, 5))

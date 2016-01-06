@@ -91,7 +91,12 @@ class Unit(object):
 
 	def damage(self, damage, attacker):
 		self.hitpoints -= damage
-		
+
+
+	def passTurn(self):
+		self.hasMoved = True
+		self.initiative = Unit.maxInitiative
+			
 	def move(self, vec):
 		self.pos = vec
 		self.hasMoved = True

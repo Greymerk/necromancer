@@ -74,9 +74,10 @@ class Player(object):
 				else:
 					cell = self.board.grid.getCellFromPoint(pygame.mouse.get_pos())
 					if cell is not None:
+						if unit.pos == cell.pos:
+							unit.passTurn()
 						if not unit.hasMoved and unit.validMove(cell.pos):
 							unit.move(cell.pos)
-
 						if unit.validAttackTarget(cell.pos):
 							unit.attack(cell.pos)
 
