@@ -49,7 +49,7 @@ class UnitManager(object):
 		if u is None:
 			return
 
-		owner = self.units[0].owner
+		owner = u.owner
 
 		p1 = 0
 		p2 = 1
@@ -57,6 +57,10 @@ class UnitManager(object):
 		num = 0
 
 		for i, unit in enumerate(self.units):
+
+			if not unit.hasInitiative():
+				continue
+
 			if unit.owner is owner:
 				num = p1
 				p1 += 2
