@@ -25,7 +25,6 @@ class Game(object):
 		self.level.update(0, self.gameboard)
 		self.player.screenshot = self.printscreen
 		self.view = Gameview(self.gameboard, self.player)
-		self.waiting = False
 		
 		while not (self.player.quit or self.player.hasLost()):
 
@@ -36,8 +35,6 @@ class Game(object):
 				self.gameboard.update()
 				self.level.update(self.turn, self.gameboard)
 				self.turn += 1
-				self.waiting = True
-				self.player.control = False
 				continue
 				
 			toMove.owner.turn(self, toMove)
