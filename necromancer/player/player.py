@@ -18,6 +18,10 @@ class Player(object):
 		self.board.units.add(Unit(self.board, Vector2(0, 1), self))
 		self.board.units.add(Unit(self.board, Vector2(0, 2), self))
 		self.board.units.add(Unit(self.board, Vector2(0, 3), self))
+		speedy = Unit(self.board, Vector2(0, 4), self)
+		speedy.speed = 3
+		self.board.units.add(speedy)
+
 
 	def update(self):
 		pass

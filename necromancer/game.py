@@ -24,14 +24,14 @@ class Game(object):
 		self.level.update(0, self.gameboard)
 		self.player.screenshot = self.printscreen
 		self.view = Gameview(self.gameboard, self.player)
+		self.time = 0
 		
 		while not (self.player.quit or self.player.hasLost()):
-
 			self.clock.tick(30)
-			toMove = self.gameboard.units.getSelected()
-			if toMove is None:
+			unit = self.gameboard.units.getSelected()
+			if unit is None:
 				continue
-			toMove.owner.turn(self, toMove)
+			unit.owner.turn(self, unit)
 			self.view.draw(self.surface)
 		
 
