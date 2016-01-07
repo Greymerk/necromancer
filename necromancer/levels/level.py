@@ -12,9 +12,14 @@ class Level(object):
 		self.control = True
 		self.color = THECOLORS["red"]
 
-		for i in xrange(4):
+		for i in xrange(3):
 			board.units.add(Unit(board, self.getSpawnPoint(board), self))
 		
+		speedy = Unit(board, self.getSpawnPoint(board), self)
+		speedy.speed = 3
+		board.units.add(speedy)
+
+
 	def turn(self, game, unit):
 		enemy = unit.getNearestEnemy()
 		if enemy is None:
@@ -25,8 +30,9 @@ class Level(object):
 			unit.moveToward(enemy.pos)
 			
 	def update(self, turn, board):
-		board.units.add(Unit(board, self.getSpawnPoint(board), self))
-			
+		pass		
+
+	
 	def getSpawnPoint(self, board):
 		pos = Vector2(10, self.rand.randint(0, 5))
 		while(board.getEntity(pos) is not None):

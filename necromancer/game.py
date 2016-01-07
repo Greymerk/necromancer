@@ -17,7 +17,6 @@ class Game(object):
 		self.surface = pygame.display.set_mode(self.size)
 		self.clock = pygame.time.Clock()
 
-		self.turn = 1
 		offset = (150,100)
 		self.gameboard = Gameboard(offset)
 		self.player = Player(self.gameboard)
@@ -30,13 +29,8 @@ class Game(object):
 
 			self.clock.tick(30)
 			toMove = self.gameboard.units.getSelected()
-			
 			if toMove is None:
-				self.gameboard.update()
-				self.level.update(self.turn, self.gameboard)
-				self.turn += 1
 				continue
-				
 			toMove.owner.turn(self, toMove)
 			self.view.draw(self.surface)
 		

@@ -1,5 +1,7 @@
 import pygame
 from pygame.color import THECOLORS
+import random
+
 
 from necromancer.util import Color
 from necromancer.util import Vector2
@@ -8,7 +10,6 @@ from necromancer.board import Cell
 
 class Unit(object):
 
-	maxInitiative = 1
 	OUTLINE = 4
 	UNIT_SIZE = Cell.size / 4
 	
@@ -17,15 +18,14 @@ class Unit(object):
 		self.owner = owner
 		self.color = THECOLORS["white"]
 		self.colorSelected = THECOLORS["green"]
-		self.initiative = 0
+		self.done = False
 		self.hasMoved = False
+		self.nextTurn = 0
 		self.hitpoints = 1
+		self.speed = 1
 		self.range = 1
 		self.board = board
-
-	def update(self):
-		self.initiative -= 1
-		self.hasMoved = False
+		self.nextTurn = random.random() * (1.0 / float(self.speed))
 
 	def draw(self, surface):
 		cell = self.board.grid.getCellFromPos(self.pos)
@@ -87,21 +87,21 @@ class Unit(object):
 		if target is None:
 			return
 		target.damage(1, self)
-		self.initiative = Unit.maxInitiative
+		self.passTurn()
 
 	def damage(self, damage, attacker):
 		self.hitpoints -= damage
 
 
 	def passTurn(self):
-		self.hasMoved = True
-		self.initiative = Unit.maxInitiative
-			
+		self.hasMoved = False
+		self.done = True
+	
 	def move(self, vec):
 		self.pos = vec
 		self.hasMoved = True
 		if self.getNearbyAttackTarget() is None:
-			self.initiative = Unit.maxInitiative
+			self.passTurn()
 
 	def moveToward(self, vec):
 		nearest = None
@@ -122,9 +122,6 @@ class Unit(object):
 			return
 
 		self.move(nearest.pos)
-
-	def hasInitiative(self):
-		return self.initiative == 0
 
 	def isDead(self):
 		return self.hitpoints <= 0

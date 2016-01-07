@@ -18,8 +18,6 @@ class Player(object):
 		self.board.units.add(Unit(self.board, Vector2(0, 1), self))
 		self.board.units.add(Unit(self.board, Vector2(0, 2), self))
 		self.board.units.add(Unit(self.board, Vector2(0, 3), self))
-		self.board.units.add(Unit(self.board, Vector2(0, 4), self))
-		self.board.units.add(Unit(self.board, Vector2(0, 5), self))
 
 	def update(self):
 		pass

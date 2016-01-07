@@ -8,8 +8,7 @@ class UnitManager(object):
 		self.units = []
 		self.grid = grid		
 		self.font = pygame.font.Font(None,24)
-		self.previouslySelected = None
-
+		self.selected = None
 		
 	def add(self, unit):
 		self.units.append(unit)
@@ -19,21 +18,20 @@ class UnitManager(object):
 		if len(self.units) == 0:
 			return None
 
-		if self.previouslySelected is None:
-			self.previouslySelected = self.units[:1][0]
+		if self.selected is not None and not self.selected.done:
+			return self.selected
 
-		if self.previouslySelected.hasInitiative():
-			return self.previouslySelected
-
+		self.selected = self.units[0]
 		for unit in self.units:
-			if unit.hasInitiative() and self.previouslySelected.owner is not unit.owner:
-				self.previouslySelected = unit
-				return unit
+			if unit.nextTurn < self.selected.nextTurn:
+				self.selected = unit
 
+		time = self.selected.nextTurn
 		for unit in self.units:
-			if unit.hasInitiative():
-				self.previouslySelected = unit
-				return unit
+			unit.nextTurn -= time
+
+		self.selected.nextTurn = 1.0 / float(self.selected.speed)
+		self.selected.done = False
 
 	def draw(self, surface):
 		
@@ -44,44 +42,12 @@ class UnitManager(object):
 		for unit in self.units:
 			unit.draw(surface)
 
-		u = self.getSelected()
-
-		if u is None:
-			return
-
-		owner = u.owner
-
-		p1 = 0
-		p2 = 1
-
-		num = 0
-
-		for i, unit in enumerate(self.units):
-
-			if not unit.hasInitiative():
-				continue
-
-			if unit.owner is owner:
-				num = p1
-				p1 += 2
-			else:
-				num = p2
-				p2 += 2
-			cell = self.grid.getCellFromPos(unit.pos)
-			surf = surface.subsurface(cell.getRect())
-			surf.blit(self.font.render(str(num), 1, THECOLORS["white"]), (5, 5))
-
 
 	def update(self):
 
 		for unit in self.units:
-			unit.update()
-
-		for unit in self.units:
 			if unit.isDead():
 				self.units.remove(unit)
-			
-		self.previouslySelected = None
 		
 	def __iter__(self):
 		return iter(self.units)
