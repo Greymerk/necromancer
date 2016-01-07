@@ -30,7 +30,8 @@ class Level(object):
 			unit.moveToward(enemy.pos)
 			
 	def update(self, turn, board):
-		pass		
+		unit = Unit(board, self.getSpawnPoint(board), self)
+		board.units.add(unit)
 
 	
 	def getSpawnPoint(self, board):

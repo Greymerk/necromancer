@@ -31,6 +31,9 @@ class Game(object):
 			unit = self.gameboard.units.getSelected()
 			if unit is None:
 				continue
+			if(int(self.time) is not int(self.gameboard.units.time)):
+				self.level.update(int(self.gameboard.units.time), self.gameboard)
+			self.time = self.gameboard.units.time
 			unit.owner.turn(self, unit)
 			self.view.draw(self.surface)
 		
