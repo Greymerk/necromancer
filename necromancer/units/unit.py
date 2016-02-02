@@ -29,10 +29,9 @@ class Unit(object):
 
 	def draw(self, surface):
 		cell = self.board.grid.getCellFromPos(self.pos)
-		r = cell.getRect()
 		if self.board.getSelected() is self and self.owner.control:
-			pygame.draw.circle(surface, Color.rainbow(), (cell.point[0] + Cell.size/2, cell.point[1] + Cell.size/2), Unit.UNIT_SIZE + Unit.OUTLINE)
-		pygame.draw.circle(surface, self.owner.color, (cell.point[0] + Cell.size/2, cell.point[1] + Cell.size/2), Unit.UNIT_SIZE)
+			pygame.draw.circle(surface, Color.rainbow(), (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE + Unit.OUTLINE)
+		pygame.draw.circle(surface, self.owner.color, (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE)
 
 	def validMove(self, pos):
 

@@ -9,23 +9,21 @@ from necromancer.util import Vector2
 
 class Gameboard(object):
 
-	def __init__(self, point):
-		self.grid = Grid(point)
-		self.point = point
+	def __init__(self):
+		self.grid = Grid()
 		self.units = UnitManager(self.grid)
 
 	def update(self):
 		self.units.update()
-
-	def draw(self, surface):
-		self.grid.draw(surface)
-		self.units.draw(surface)
 
 	def getEntity(self, pos):
 		for unit in self.units.units:
 			if pos == unit.pos:
 				return unit
 
+	def getCellFromPos(self, pos):
+		return self.grid.getCellFromPos(pos)
+				
 	def getSelected(self):
 		return self.units.getSelected()
 

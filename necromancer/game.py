@@ -16,14 +16,14 @@ class Game(object):
 		self.size = (1024, 600)
 		self.surface = pygame.display.set_mode(self.size)
 		self.clock = pygame.time.Clock()
-
-		offset = (150,100)
-		self.gameboard = Gameboard(offset)
+		
+		self.gameboard = Gameboard()
 		self.player = Player(self.gameboard)
 		self.level = Level(self.gameboard)
 		self.level.update(0, self.gameboard)
 		self.player.screenshot = self.printscreen
-		self.view = Gameview(self.gameboard, self.player)
+		self.view = Gameview(self.surface, self)
+		
 		self.time = 0
 		
 		while not (self.player.quit or self.player.hasLost()):
@@ -35,9 +35,12 @@ class Game(object):
 				self.level.update(int(self.gameboard.units.time), self.gameboard)
 			self.time = self.gameboard.units.time
 			unit.owner.turn(self, unit)
-			self.view.draw(self.surface)
+			self.view.draw()
 		
 
+	def getElement(self, vec):
+		return self.view.getElement(vec)
+		
 	def printscreen(self):
 		date = time.gmtime()
 		fileName =	"screenshot_" + \
