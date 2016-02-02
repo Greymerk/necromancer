@@ -45,7 +45,6 @@ class Player(object):
 
 			elif e.type == pygame.MOUSEBUTTONUP and e.button == 1:
 				cell = game.getElement(pygame.mouse.get_pos())
-				
 				if cell is not None:
 					if unit.pos == cell.pos:
 						unit.passTurn()

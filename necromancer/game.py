@@ -38,6 +38,7 @@ class Game(object):
 			self.time = self.gameboard.units.time
 			unit.owner.turn(self, unit)
 			self.view.draw()
+			self.gameboard.update()
 		
 
 	def getElement(self, vec):

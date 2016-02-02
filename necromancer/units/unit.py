@@ -29,6 +29,9 @@ class Unit(object):
 
 	def draw(self, surface):
 		cell = self.board.grid.getCellFromPos(self.pos)
+		color = self.owner.color
+		if self.hitpoints == 0:
+			color = THECOLORS["white"]
 		if self.board.getSelected() is self and self.owner.control:
 			pygame.draw.circle(surface, Color.rainbow(), (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE + Unit.OUTLINE)
 		pygame.draw.circle(surface, self.owner.color, (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE)
@@ -90,7 +93,6 @@ class Unit(object):
 
 	def damage(self, damage, attacker):
 		self.hitpoints -= damage
-
 
 	def passTurn(self):
 		self.hasMoved = False
