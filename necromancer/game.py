@@ -9,6 +9,7 @@ from levels import Level
 
 class Game(object):
 
+	FPS = 30
 
 	def __init__(self):
 		
@@ -24,10 +25,11 @@ class Game(object):
 		self.player.screenshot = self.printscreen
 		self.view = Gameview(self.surface, self)
 		
+		
 		self.time = 0
 		
 		while not (self.player.quit or self.player.hasLost()):
-			self.clock.tick(30)
+			self.clock.tick(Game.FPS)
 			unit = self.gameboard.units.getSelected()
 			if unit is None:
 				continue

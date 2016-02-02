@@ -26,31 +26,6 @@ class Player(object):
 	def update(self):
 		pass
 
-	def draw(self):
-	
-		for cell in self.board:
-			if self.validSpawn(cell.pos):
-				cell.highlight(THECOLORS["purple"])
-
-		cell = self.board.grid.getCellFromPoint(pygame.mouse.get_pos())
-		if cell is not None:
-			cell.highlight(Color.rainbow())
-
-		sel = self.board.getSelected()
-	
-		if sel is None:
-			return
-
-		if sel.owner is not self:
-			return
-
-		for cell in self.board.grid.cells:
-			if not sel.hasMoved and sel.validMove(cell.pos):
-				cell.highlight(THECOLORS["green"])
-			if sel.validAttackTarget(cell.pos):
-				cell.highlight(THECOLORS["red"])
-				
-
 	def turn(self, game, unit):
 		
 		event = pygame.event.get()
@@ -69,8 +44,8 @@ class Player(object):
 					self.board.units.add(Unit(self.board, cell.pos, self))
 
 			elif e.type == pygame.MOUSEBUTTONUP and e.button == 1:
-				
 				cell = game.getElement(pygame.mouse.get_pos())
+				
 				if cell is not None:
 					if unit.pos == cell.pos:
 						unit.passTurn()
@@ -95,10 +70,3 @@ class Player(object):
 				return False
 		
 		return True
-		
-			
-			
-			
-			
-
-
