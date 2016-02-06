@@ -1,2 +1,2 @@
-from vec2 import Vector2
+from vector import Vector2
 from color import Color
