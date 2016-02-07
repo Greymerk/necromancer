@@ -12,14 +12,9 @@ class ActionView(object):
 		self.abilities = self.game.player.abilities
 		
 	def getElement(self, vec):
-		
 		v = Vector2(vec)
 		v -= self.pos
-		
-		print str(v)
 		x = int(v[0] / Cell.size)
-		print x
-		print self.game.player.ability.__class__.__name__
 		if x in range(len(self.abilities)):
 			return self.abilities[x]
 		

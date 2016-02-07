@@ -9,5 +9,3 @@ class AbilityControl(object):
 		if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
 			if self.player.ability is not ability:
 				self.player.ability = ability
-			else:
-				self.player.ability = None
