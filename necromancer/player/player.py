@@ -2,16 +2,29 @@ import pygame
 from pygame.locals import *
 from pygame.color import THECOLORS
 
+from necromancer.abilities import SpawnMinion
+
 from necromancer.util import Color
 from necromancer.units import Unit
 from necromancer.util import Vector2
+
 from unitcontrol import UnitControl
 from cellcontrol import CellControl
+from abilitycontrol import AbilityControl
 
 class Player(object):
 
 	
 	def __init__(self, board):
+		
+		self.abilities = []
+		self.abilities.append(SpawnMinion(self))
+		self.abilities.append(SpawnMinion(self))
+		self.abilities.append(SpawnMinion(self))
+		self.ability = self.abilities[0]
+		self.abilitycontrol = AbilityControl(self)
+		for ability in self.abilities:
+			ability.observers.append(self.abilitycontrol)
 		self.unitcontrol = UnitControl(self)
 		self.cellcontrol = CellControl(self)
 		for cell in board:
