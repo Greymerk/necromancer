@@ -1,5 +1,5 @@
 import pygame
-from necromancer.units import Unit
+
 
 class CellControl(object):
 	
@@ -21,5 +21,6 @@ class CellControl(object):
 				entity.attack(cell.pos)
 				
 		if event.type == pygame.MOUSEBUTTONUP and event.button == 3:
-			if self.player.validSpawn(cell.pos):
-				self.player.board.units.add(Unit(self.player.board, cell.pos, self.player))
+			if self.player.ability is not None:
+				self.player.ability.action(cell)
+
