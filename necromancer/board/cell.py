@@ -8,6 +8,7 @@ class Cell(object):
 
 	def __init__(self, pos):
 		self.pos = pos
+		self.observers = []
 	
 	def update(self):
 		pass
@@ -21,3 +22,7 @@ class Cell(object):
 		padding = 4
 		pad = pygame.Rect((0 + padding, 0 + padding), (Cell.size - padding * 2, Cell.size - padding * 2))
 		pygame.draw.rect(surface, color, pad, 4)
+
+	def notify(self, event):
+		for observer in self.observers:
+			observer.notify(self, event)

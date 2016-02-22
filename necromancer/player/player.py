@@ -2,14 +2,33 @@ import pygame
 from pygame.locals import *
 from pygame.color import THECOLORS
 
+from necromancer.abilities import SpawnMinion
+
 from necromancer.util import Color
 from necromancer.units import Unit
 from necromancer.util import Vector2
+
+from unitcontrol import UnitControl
+from cellcontrol import CellControl
+from abilitycontrol import AbilityControl
 
 class Player(object):
 
 	
 	def __init__(self, board):
+		
+		self.abilities = []
+		self.abilities.append(SpawnMinion(self))
+		self.abilities.append(SpawnMinion(self))
+		self.abilities.append(SpawnMinion(self))
+		self.ability = self.abilities[0]
+		self.abilitycontrol = AbilityControl(self)
+		for ability in self.abilities:
+			ability.observers.append(self.abilitycontrol)
+		self.unitcontrol = UnitControl(self)
+		self.cellcontrol = CellControl(self)
+		for cell in board:
+			cell.observers.append(self.cellcontrol)
 		self.color = THECOLORS["deepskyblue1"]
 		self.quit = False
 		self.board = board
@@ -27,9 +46,9 @@ class Player(object):
 		pass
 
 	def turn(self, game, unit):
-		
+	
 		event = pygame.event.get()
-
+		
 		for e in event:
 			if(e.type == QUIT):
 				self.quit = True
@@ -37,24 +56,17 @@ class Player(object):
 			elif(e.type == KEYDOWN):
 				if(e.key == K_p):
 					self.screenshot()
-			
-			elif e.type == pygame.MOUSEBUTTONUP and e.button == 3:
-				cell = game.getElement(pygame.mouse.get_pos())
-				if cell is not None and self.validSpawn(cell.pos):
-					self.board.units.add(Unit(self.board, cell.pos, self))
 
-			elif e.type == pygame.MOUSEBUTTONUP and e.button == 1:
-				cell = game.getElement(pygame.mouse.get_pos())
-				if cell is not None:
-					if unit.pos == cell.pos:
-						unit.passTurn()
-					if not unit.hasMoved and unit.validMove(cell.pos):
-						unit.move(cell.pos)
-					if unit.validAttackTarget(cell.pos):
-						unit.attack(cell.pos)
-
+			if(e.type == pygame.MOUSEBUTTONUP):
+				mpos = pygame.mouse.get_pos()
+				element = game.getElement(mpos)
+				if hasattr(element, 'notify'):
+					element.notify(e)
+				
+					
+					
 	def validSpawn(self, pos):
-		if pos[0] is not 0:
+		if pos[0] != 0:
 			return False
 		
 		if self.board.getEntity(pos) is not None:

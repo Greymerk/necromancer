@@ -26,7 +26,8 @@ class Unit(object):
 		self.range = 1
 		self.board = board
 		self.nextTurn = random.random() * (1.0 / float(self.speed))
-		
+		self.observers = []
+
 	def draw(self, surface):
 		cell = self.board.grid.getCellFromPos(self.pos)
 		color = self.owner.color
@@ -156,3 +157,7 @@ class Unit(object):
 				return unit
 
 		return nearest
+		
+	def notify(self, event):
+		for observer in self.observers:
+			observer.notify(self, event)
