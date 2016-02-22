@@ -26,7 +26,7 @@ class Unit(object):
 		self.range = 1
 		self.board = board
 		self.nextTurn = random.random() * (1.0 / float(self.speed))
-
+		
 	def draw(self, surface):
 		cell = self.board.grid.getCellFromPos(self.pos)
 		color = self.owner.color
@@ -36,6 +36,16 @@ class Unit(object):
 			pygame.draw.circle(surface, Color.rainbow(), (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE + Unit.OUTLINE)
 		pygame.draw.circle(surface, self.owner.color, (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE)
 
+	def clone(self):
+		p = Vector2(self.pos[0], self.pos[1])
+		cpy = Unit(self.board, p, self.owner)
+		cpy.speed = self.speed
+		cpy.done = self.done
+		cpy.hasMoved = self.hasMoved
+		cpy.nextTurn = self.nextTurn
+		cpy.original = self
+		return cpy
+		
 	def validMove(self, pos):
 
 		if not self.board.inBounds(pos):

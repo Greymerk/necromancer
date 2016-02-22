@@ -1,5 +1,7 @@
 import pygame
+from copy import deepcopy
 from pygame.color import THECOLORS
+
 from necromancer.board import Cell
 
 class UnitManager(object):
@@ -9,11 +11,42 @@ class UnitManager(object):
 		self.grid = grid		
 		self.font = pygame.font.Font(None,24)
 		self.selected = None
-		self.time = 0		
-
+		self.time = 0
+		self.prediction = []
+		
 	def add(self, unit):
 		self.units.append(unit)
 
+	def predict(self, turns):
+		clones = []
+		
+		for unit in self.units:
+			clone = unit.clone()
+			clones.append(clone)
+		
+		prediction = []
+		simTime = self.time
+		
+		for turn in range(turns):
+			selected = clones[0]
+			for clone in clones:
+				if clone.nextTurn < selected.nextTurn:
+					selected = clone
+				
+			time = selected.nextTurn
+			for clone in clones:
+				clone.nextTurn -= time
+		
+			simTime += time
+			selected.nextTurn = 1.0 / float(selected.speed)
+			prediction.append(selected)
+		
+		results = []
+		for clone in prediction:
+			results.append(clone.original)
+						
+		return results
+		
 	def getSelected(self):
 
 		if len(self.units) == 0:
@@ -56,6 +89,11 @@ class UnitManager(object):
 		for unit in self.units:
 			if unit.isDead():
 				self.units.remove(unit)
+				
+		self.prediction = self.predict(5)
+		print "prediction"
+		for unit in self.prediction:
+			print str(unit.pos) + ' id:' + str(id(unit)) 
 		
 	def __iter__(self):
 		return iter(self.units)

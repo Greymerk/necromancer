@@ -25,7 +25,6 @@ class Game(object):
 		self.player.screenshot = self.printscreen
 		self.view = Gameview(self.surface, self)
 		
-		
 		self.time = 0
 		
 		while not (self.player.quit or self.player.hasLost()):

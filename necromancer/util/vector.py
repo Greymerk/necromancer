@@ -44,3 +44,7 @@ class Vector2(object):
 	def __str__(self):
 			return str(self.x) + ' ' + str(self.y)
 
+if __name__ == '__main__':
+	v = Vector2(0,1)
+	c = Vector2(v)
+	print str(c)
