@@ -2,6 +2,7 @@ import pygame
 from pygame.color import THECOLORS
 from boardview import BoardView
 from actionview import ActionView
+from futureview import FutureView
 from necromancer.util.vector import Vector2
 from necromancer.board.cell import Cell
 
@@ -26,17 +27,25 @@ class Gameview(object):
 		actionSurf = surface.subsurface(self.actionRect);
 		self.actionView = ActionView(self.actionPos, actionSurf, game)
 		
+		self.futurePos = (150 + 12 * Cell.size, Cell.size)
+		self.futureRect = pygame.Rect(self.futurePos, (Cell.size, Cell.size * 6))
+		futureSurf = surface.subsurface(self.futureRect)
+		self.futureView = FutureView(self.futurePos, futureSurf, game)
+		
 		self.gameboard = game.gameboard
 		self.player = game.player
 		self.font = pygame.font.Font(None,24)
 
-	def getElement(self, vec):
+	def notify(self, vec, event):
 		
 		if self.actionRect.collidepoint(vec):
-			return self.actionView.getElement(vec)
+			return self.actionView.notify(vec, event)
 	
 		if self.boardRect.collidepoint(vec):
-			return self.boardView.getElement(vec)
+			return self.boardView.notify(vec, event)
+		
+		if self.futureRect.collidepoint(vec):
+			return self.futureView.notify(vec, event)
 		
 		return None
 		
@@ -46,12 +55,7 @@ class Gameview(object):
 		self.timeSurf.blit(self.font.render(msg, 1, THECOLORS["gray"]), (0,0))
 		self.boardView.draw()
 		self.actionView.draw()
+		self.futureView.draw()
 		
-		element = self.getElement(pygame.mouse.get_pos())
-		try:
-			self.boardView.highlight(element, THECOLORS["yellow"])
-		except:
-			pass
-			
 		pygame.display.flip()
 		

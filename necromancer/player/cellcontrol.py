@@ -8,6 +8,7 @@ class CellControl(object):
 		
 	def notify(self, cell, event):
 	
+	
 		if not self.player.control:
 			return
 	

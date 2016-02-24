@@ -11,14 +11,12 @@ class ActionView(object):
 		self.game = game
 		self.abilities = self.game.player.abilities
 		
-	def getElement(self, vec):
+	def notify(self, vec, event):
 		v = Vector2(vec)
 		v -= self.pos
 		x = int(v[0] / Cell.size)
 		if x in range(len(self.abilities)):
-			return self.abilities[x]
-		
-		
+			self.abilities[x].notify(event)
 		
 	def draw(self):
 		for i, ability in enumerate(self.abilities):

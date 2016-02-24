@@ -6,7 +6,7 @@ import random
 from necromancer.util import Color
 from necromancer.util import Vector2
 from necromancer.board import Cell
-
+from pygame.color import THECOLORS
 
 class Unit(object):
 
@@ -36,7 +36,15 @@ class Unit(object):
 		if self.board.getSelected() is self and self.owner.control:
 			pygame.draw.circle(surface, Color.rainbow(), (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE + Unit.OUTLINE)
 		pygame.draw.circle(surface, self.owner.color, (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE)
+		
+		if self.board.hover is self:
+			self.highlight(surface)
 
+	def highlight(self, surface, color = THECOLORS["white"]):
+		padding = 4
+		pad = pygame.Rect((0 + padding, 0 + padding), (Cell.size - padding * 2, Cell.size - padding * 2))
+		pygame.draw.rect(surface, color, pad, 4)
+		
 	def clone(self):
 		p = Vector2(self.pos[0], self.pos[1])
 		cpy = Unit(self.board, p, self.owner)

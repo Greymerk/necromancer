@@ -12,6 +12,7 @@ class Gameboard(object):
 	def __init__(self):
 		self.grid = Grid()
 		self.units = UnitManager(self.grid)
+		self.hover = None
 
 	def update(self):
 		self.units.update()

@@ -13,8 +13,10 @@ class UnitManager(object):
 		self.selected = None
 		self.time = 0
 		self.prediction = []
+		self.unitcontrol = None
 		
 	def add(self, unit):
+		unit.observers.append(self.unitcontrol)
 		self.units.append(unit)
 
 	def predict(self, turns):
@@ -90,10 +92,7 @@ class UnitManager(object):
 			if unit.isDead():
 				self.units.remove(unit)
 				
-		self.prediction = self.predict(5)
-		print "prediction"
-		for unit in self.prediction:
-			print str(unit.pos) + ' id:' + str(id(unit)) 
+		self.prediction = self.predict(6)
 		
 	def __iter__(self):
 		return iter(self.units)

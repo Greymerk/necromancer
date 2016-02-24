@@ -26,6 +26,7 @@ class Player(object):
 		for ability in self.abilities:
 			ability.observers.append(self.abilitycontrol)
 		self.unitcontrol = UnitControl(self)
+		board.units.unitcontrol = self.unitcontrol
 		self.cellcontrol = CellControl(self)
 		for cell in board:
 			cell.observers.append(self.cellcontrol)
@@ -57,14 +58,10 @@ class Player(object):
 				if(e.key == K_p):
 					self.screenshot()
 
-			if(e.type == pygame.MOUSEBUTTONUP):
+			if(e.type in [pygame.MOUSEBUTTONUP, pygame.MOUSEMOTION]):
 				mpos = pygame.mouse.get_pos()
-				element = game.getElement(mpos)
-				if hasattr(element, 'notify'):
-					element.notify(e)
+				game.view.notify(mpos, e)
 				
-					
-					
 	def validSpawn(self, pos):
 		if pos[0] != 0:
 			return False

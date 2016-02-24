@@ -39,10 +39,6 @@ class Game(object):
 			self.view.draw()
 			self.gameboard.update()
 		
-
-	def getElement(self, vec):
-		return self.view.getElement(vec)
-		
 	def printscreen(self):
 		date = time.gmtime()
 		fileName =	"screenshot_" + \

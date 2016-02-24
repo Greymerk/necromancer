@@ -11,11 +11,6 @@ class BoardView(object):
 		self.game = game
 		self.board = game.gameboard
 
-	def getElement(self, vec):
-		v = Vector2(vec)
-		v -= self.pos
-		pos = (int(v[0] / Cell.size), int(v[1] / Cell.size))
-		return self.board.grid.getCellFromPos(pos)
 		
 	def draw(self):
 		for x in range(11):
@@ -41,3 +36,10 @@ class BoardView(object):
 		rect = pygame.Rect((cell.pos[0] * Cell.size, cell.pos[1] * Cell.size),(Cell.size, Cell.size))
 		surf = self.surface.subsurface(rect)
 		cell.highlight(surf, color)
+		
+		
+	def notify(self, vec, event):
+		v = Vector2(vec)
+		v -= self.pos
+		pos = (int(v[0] / Cell.size), int(v[1] / Cell.size))
+		self.board.grid.getCellFromPos(pos).notify(event)
