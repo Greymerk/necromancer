@@ -38,7 +38,7 @@ class Unit(object):
 		pygame.draw.circle(surface, self.owner.color, (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE)
 		
 		if self.board.hover is self:
-			self.highlight(surface)
+			self.highlight(surface, Color.rainbow())
 
 	def highlight(self, surface, color = THECOLORS["white"]):
 		padding = 4

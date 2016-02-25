@@ -13,21 +13,23 @@ class Gameview(object):
 		self.game = game
 		self.surface = surface
 		
-		timePos = (150, Cell.size / 2)
+		left = 100
+		
+		timePos = (left, Cell.size / 2)
 		timeRect = (timePos, (Cell.size * 11, 32))
 		self.timeSurf = self.surface.subsurface(timeRect)
 		
-		self.boardPos = (150, Cell.size)
+		self.boardPos = (left, Cell.size)
 		self.boardRect = pygame.Rect(self.boardPos, (Cell.size * 11, Cell.size * 6))
 		boardSurf = surface.subsurface(self.boardRect)
 		self.boardView = BoardView(boardSurf, self.boardPos, game)
 		
-		self.actionPos = (150, self.boardPos[1] + Cell.size * 6 + Cell.size / 2)
+		self.actionPos = (left, self.boardPos[1] + Cell.size * 6 + Cell.size / 2)
 		self.actionRect = pygame.Rect(self.actionPos, (Cell.size * 11, Cell.size))
 		actionSurf = surface.subsurface(self.actionRect);
 		self.actionView = ActionView(self.actionPos, actionSurf, game)
 		
-		self.futurePos = (150 + 12 * Cell.size, Cell.size)
+		self.futurePos = (left + 12 * Cell.size, Cell.size)
 		self.futureRect = pygame.Rect(self.futurePos, (Cell.size, Cell.size * 6))
 		futureSurf = surface.subsurface(self.futureRect)
 		self.futureView = FutureView(self.futurePos, futureSurf, game)

@@ -12,12 +12,8 @@ class Level(object):
 		self.control = True
 		self.color = THECOLORS["red"]
 
-		for i in xrange(3):
+		for i in xrange(4):
 			board.units.add(Unit(board, self.getSpawnPoint(board), self))
-		
-		speedy = Unit(board, self.getSpawnPoint(board), self)
-		speedy.speed = 3
-		board.units.add(speedy)
 
 
 	def turn(self, game, unit):
