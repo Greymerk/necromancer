@@ -8,7 +8,9 @@ class CellControl(object):
 		
 	def notify(self, cell, event):
 	
-	
+		if event.type == pygame.MOUSEMOTION:
+			self.player.board.hover = cell.pos
+
 		if not self.player.control:
 			return
 	

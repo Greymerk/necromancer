@@ -37,7 +37,7 @@ class Unit(object):
 			pygame.draw.circle(surface, Color.rainbow(), (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE + Unit.OUTLINE)
 		pygame.draw.circle(surface, self.owner.color, (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE)
 		
-		if self.board.hover is self:
+		if self.board.hover is not None and self.board.hover == self.pos:
 			self.highlight(surface, Color.rainbow())
 
 	def highlight(self, surface, color = THECOLORS["white"]):

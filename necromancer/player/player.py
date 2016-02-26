@@ -57,8 +57,11 @@ class Player(object):
 					self.screenshot()
 
 			if(e.type in [pygame.MOUSEBUTTONUP, pygame.MOUSEMOTION]):
+				self.board.hover = None
 				mpos = pygame.mouse.get_pos()
 				game.view.notify(mpos, e)
+
+			
 				
 	def validSpawn(self, pos):
 		if pos[0] != 0:

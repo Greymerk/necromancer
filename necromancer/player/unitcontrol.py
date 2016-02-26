@@ -8,5 +8,5 @@ class UnitControl(object):
 	def notify(self, entity, event):
 
 		if(event.type == pygame.MOUSEMOTION):
-			self.player.board.hover = entity
+			self.player.board.hover = entity.pos
 			return

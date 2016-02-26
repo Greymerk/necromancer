@@ -20,6 +20,9 @@ class BoardView(object):
 				surf = self.surface.subsurface(rect)
 				cell.draw(surf)
 				unit = self.board.getEntity((x, y))
+				if self.board.hover is not None:
+					if str(self.board.hover) == str(Vector2(x, y)):
+						cell.highlight(surf, THECOLORS["yellow"])
 				if(self.game.player.validSpawn(cell.pos)):
 					cell.highlight(surf, THECOLORS["purple"])
 				if(unit is not None):
