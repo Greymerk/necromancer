@@ -21,9 +21,6 @@ class Gameboard(object):
 		for unit in self.units.units:
 			if pos == unit.pos:
 				return unit
-
-	def getCellFromPos(self, pos):
-		return self.grid.getCellFromPos(pos)
 				
 	def getSelected(self):
 		return self.units.getSelected()
@@ -32,4 +29,8 @@ class Gameboard(object):
 		return self.grid.inBounds(vec)
 		
 	def __iter__(self):
-		return iter(self.grid)
+		board = []
+		for x in range(11):
+			for y in range(6):
+				board.append((x, y))
+		return iter(board)

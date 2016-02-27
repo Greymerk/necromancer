@@ -28,8 +28,6 @@ class Player(object):
 		self.unitcontrol = UnitControl(self)
 		board.units.unitcontrol = self.unitcontrol
 		self.cellcontrol = CellControl(self)
-		for cell in board:
-			cell.observers.append(self.cellcontrol)
 		self.color = THECOLORS["deepskyblue1"]
 		self.quit = False
 		self.board = board

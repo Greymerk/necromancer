@@ -5,13 +5,12 @@ import random
 
 from necromancer.util import Color
 from necromancer.util import Vector2
-from necromancer.board import Cell
 from pygame.color import THECOLORS
 
 class Unit(object):
 
 	OUTLINE = 4
-	UNIT_SIZE = Cell.size / 4
+	UNIT_SIZE = 16
 	
 	def __init__(self, board, pos, owner=None):
 		self.pos = pos
@@ -29,20 +28,19 @@ class Unit(object):
 		self.observers = []
 
 	def draw(self, surface):
-		cell = self.board.grid.getCellFromPos(self.pos)
 		color = self.owner.color
 		if self.hitpoints == 0:
 			color = THECOLORS["white"]
 		if self.board.getSelected() is self and self.owner.control:
-			pygame.draw.circle(surface, Color.rainbow(), (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE + Unit.OUTLINE)
-		pygame.draw.circle(surface, self.owner.color, (Cell.size/2, Cell.size/2), Unit.UNIT_SIZE)
+			pygame.draw.circle(surface, Color.rainbow(), (32, 32), Unit.UNIT_SIZE + Unit.OUTLINE)
+		pygame.draw.circle(surface, self.owner.color, (32, 32), Unit.UNIT_SIZE)
 		
 		if self.board.hover is not None and self.board.hover == self.pos:
 			self.highlight(surface, Color.rainbow())
 
 	def highlight(self, surface, color = THECOLORS["white"]):
 		padding = 4
-		pad = pygame.Rect((0 + padding, 0 + padding), (Cell.size - padding * 2, Cell.size - padding * 2))
+		pad = pygame.Rect((0 + padding, 0 + padding), (64 - padding * 2, 64 - padding * 2))
 		pygame.draw.rect(surface, color, pad, 4)
 		
 	def clone(self):
@@ -118,7 +116,7 @@ class Unit(object):
 		self.done = True
 	
 	def move(self, vec):
-		self.pos = vec
+		self.pos = Vector2(vec)
 		self.hasMoved = True
 		if self.getNearbyAttackTarget() is None:
 			self.passTurn()
@@ -126,22 +124,22 @@ class Unit(object):
 	def moveToward(self, vec):
 		nearest = None
 
-		for cell in self.board.grid.cells:
-			if not self.validMove(cell.pos):
+		for pos in self.board:
+			if not self.validMove(pos):
 				continue
 
 			if nearest == None:
-				nearest = cell
+				nearest = pos
 				continue
 
-			if vec.dist(cell.pos) < vec.dist(nearest.pos):
-				nearest = cell
+			if vec.dist(pos) < vec.dist(nearest):
+				nearest = pos
 
 		if nearest is None:
 			self.move(self.pos)
 			return
 
-		self.move(nearest.pos)
+		self.move(nearest)
 
 	def isDead(self):
 		return self.hitpoints <= 0

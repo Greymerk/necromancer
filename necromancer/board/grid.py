@@ -10,17 +10,8 @@ class Grid(object):
 	cols = 11
 
 	def __init__(self):
-		self.cells = []
-		for x in range(Grid.cols):
-			for y in range(Grid.rows):
-				vec = Vector2(x, y)
-				rect = pygame.Rect((x * Cell.size, y * Cell.size), (Cell.size, Cell.size))
-				self.cells.append(Cell(vec))
+		pass
 
-	def getCellFromPos(self, pos):
-		for cell in self.cells:
-			if cell.pos == pos:
-				return cell
 
 	def inBounds(self, vec):
 		
@@ -38,5 +29,3 @@ class Grid(object):
 
 		return True
 		
-	def __iter__(self):
-		return iter(self.cells)
