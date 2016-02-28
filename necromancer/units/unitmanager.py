@@ -2,13 +2,10 @@ import pygame
 from copy import deepcopy
 from pygame.color import THECOLORS
 
-from necromancer.board import Cell
-
 class UnitManager(object):
 
-	def __init__(self, grid):
+	def __init__(self):
 		self.units = []
-		self.grid = grid		
 		self.font = pygame.font.Font(None,24)
 		self.selected = None
 		self.time = 0

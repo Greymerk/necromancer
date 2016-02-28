@@ -3,15 +3,16 @@ from pygame.color import THECOLORS
 
 from necromancer.units import UnitManager
 from necromancer.units import Unit
-from grid import Grid
 from necromancer.util import Vector2
 
 
 class Gameboard(object):
 
+	rows = 6
+	cols = 11
+
 	def __init__(self):
-		self.grid = Grid()
-		self.units = UnitManager(self.grid)
+		self.units = UnitManager()
 		self.hover = None
 
 	def update(self):
@@ -26,7 +27,20 @@ class Gameboard(object):
 		return self.units.getSelected()
 
 	def inBounds(self, vec):
-		return self.grid.inBounds(vec)
+		
+		if vec[0] < 0:
+			return False
+
+		if vec[0] >= Gameboard.cols:
+			return False
+
+		if vec[1] < 0:
+			return False
+		
+		if vec[1] >= Gameboard.rows:
+			return False
+
+		return True
 		
 	def __iter__(self):
 		board = []
