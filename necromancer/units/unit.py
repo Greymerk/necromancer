@@ -13,7 +13,7 @@ class Unit(object):
 	UNIT_SIZE = 16
 	
 	def __init__(self, board, pos, owner=None):
-		self.pos = pos
+		self.pos = Vector2(pos)
 		self.owner = owner
 		self.color = THECOLORS["white"]
 		self.colorSelected = THECOLORS["green"]
@@ -110,6 +110,7 @@ class Unit(object):
 
 	def damage(self, damage, attacker):
 		self.hitpoints -= damage
+		self.board.update()
 
 	def passTurn(self):
 		self.hasMoved = False

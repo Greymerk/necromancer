@@ -34,6 +34,7 @@ class Game(object):
 				continue
 			if(int(self.time) is not int(self.gameboard.units.time)):
 				self.level.update(int(self.gameboard.units.time), self.gameboard)
+				self.gameboard.update()
 			self.time = self.gameboard.units.time
 			unit.owner.turn(self, unit)
 			self.view.draw()

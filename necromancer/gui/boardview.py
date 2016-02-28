@@ -34,18 +34,15 @@ class BoardView(object):
 				unit.draw(c.surface)
 			if(self.game.player.validSpawn(Vector2(c.pos))):
 				c.highlight(THECOLORS["purple"])
-
-					
+				
 		if self.board.hover is not None:
 			pos = (int(self.board.hover[0]), int(self.board.hover[1]))
 			self.cells[pos].highlight(THECOLORS["yellow"])
-
 
 	def highlight(self, cell, color):
 		rect = pygame.Rect((cell.pos[0] * Cell.size, cell.pos[1] * Cell.size),(Cell.size, Cell.size))
 		surf = self.surface.subsurface(rect)
 		cell.highlight(surf, color)
-		
 		
 	def notify(self, vec, event):
 		v = Vector2(vec)

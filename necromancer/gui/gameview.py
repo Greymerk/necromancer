@@ -15,10 +15,6 @@ class Gameview(object):
 		
 		left = 100
 		
-		timePos = (left, Cell.size / 2)
-		timeRect = (timePos, (Cell.size * 11, 32))
-		self.timeSurf = self.surface.subsurface(timeRect)
-		
 		self.boardPos = (left, Cell.size)
 		self.boardRect = pygame.Rect(self.boardPos, (Cell.size * 11, Cell.size * 6))
 		boardSurf = surface.subsurface(self.boardRect)
@@ -53,8 +49,6 @@ class Gameview(object):
 		
 	def draw(self):
 		self.surface.fill(THECOLORS["grey23"])
-		msg = "Time: " + str(self.game.time)
-		self.timeSurf.blit(self.font.render(msg, 1, THECOLORS["gray"]), (0,0))
 		self.boardView.draw()
 		self.actionView.draw()
 		self.futureView.draw()
