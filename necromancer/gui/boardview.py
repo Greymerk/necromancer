@@ -24,36 +24,22 @@ class BoardView(object):
 		sel = self.board.getSelected()
 		for c in self.cells.values():
 			c.draw()
+			if sel is not None and sel.owner is self.game.player:
+				if not sel.hasMoved and sel.validMove(c.pos):
+					c.highlight(THECOLORS["green"])
+				if sel.validAttackTarget(c.pos):
+					c.highlight(THECOLORS["red"])
 			unit = self.board.getEntity(c.pos)
 			if unit is not None:
 				unit.draw(c.surface)
-				if(self.game.player.validSpawn(Vector2(c.pos))):
-					c.highlight(THECOLORS["purple"])
+			if(self.game.player.validSpawn(Vector2(c.pos))):
+				c.highlight(THECOLORS["purple"])
 
-
+					
 		if self.board.hover is not None:
 			pos = (int(self.board.hover[0]), int(self.board.hover[1]))
 			self.cells[pos].highlight(THECOLORS["yellow"])
-			
-		'''
-		for x in range(11):
-			for y in range(6):
-				cell = self.board.getCellFromPos((x, y))
-				
-				
-				cell.draw(surf)
-				unit = self.board.getEntity((x, y))
 
-
-				if(unit is not None):
-					unit.draw(surf)
-				sel = self.board.getSelected()
-				if sel is not None and sel.owner is self.game.player:
-					if not sel.hasMoved and sel.validMove(cell.pos):
-						cell.highlight(surf, THECOLORS["green"])
-					if sel.validAttackTarget(cell.pos):
-						cell.highlight(surf, THECOLORS["red"])
-		'''		
 
 	def highlight(self, cell, color):
 		rect = pygame.Rect((cell.pos[0] * Cell.size, cell.pos[1] * Cell.size),(Cell.size, Cell.size))
